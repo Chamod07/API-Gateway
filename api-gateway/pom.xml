@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.chamod</groupId>
-	<artifactId>gatewaybackend</artifactId>
+	<artifactId>apigateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>APIGatewayBackend</name>
 	<description>API Gateway for microservices</description>

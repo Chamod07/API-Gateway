@@ -1,4 +1,4 @@
-package com.chamod.gatewaybackend;
+package com.chamod.apigateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
