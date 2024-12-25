@@ -11,13 +11,26 @@ spring:
           uri: http://localhost:8081
           predicates:
             - Path=/api/customers/**
+          filters:
+            - RemoveRequestHeader=Cookie
 
         - id: order-service
           uri: http://localhost:8082
           predicates:
             - Path=/api/orders/**
+          filters:
+            - RemoveRequestHeader=Cookie
 
         - id: product-service
           uri: http://localhost:8083
           predicates:
             - Path=/api/products/**
+          filters:
+            - RemoveRequestHeader=Cookie
+
+#Actuator endpoints for monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
