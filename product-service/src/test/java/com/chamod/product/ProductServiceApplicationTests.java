@@ -1,4 +1,4 @@
-package com.chamod.product_service;
+package com.chamod.product;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

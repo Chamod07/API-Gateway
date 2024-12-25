@@ -1,4 +1,4 @@
-package com.chamod.order_service.entity;
+package com.chamod.order.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

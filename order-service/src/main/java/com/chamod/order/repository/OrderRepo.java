@@ -1,6 +1,6 @@
-package com.chamod.order_service.repository;
+package com.chamod.order.repository;
 
-import com.chamod.order_service.entity.Order;
+import com.chamod.order.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

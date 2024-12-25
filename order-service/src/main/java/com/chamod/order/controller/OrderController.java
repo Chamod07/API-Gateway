@@ -1,7 +1,7 @@
-package com.chamod.order_service.controller;
+package com.chamod.order.controller;
 
-import com.chamod.order_service.entity.Order;
-import com.chamod.order_service.service.OrderService;
+import com.chamod.order.entity.Order;
+import com.chamod.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

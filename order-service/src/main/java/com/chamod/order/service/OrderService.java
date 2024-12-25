@@ -1,7 +1,7 @@
-package com.chamod.order_service.service;
+package com.chamod.order.service;
 
-import com.chamod.order_service.entity.Order;
-import com.chamod.order_service.repository.OrderRepo;
+import com.chamod.order.entity.Order;
+import com.chamod.order.repository.OrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
