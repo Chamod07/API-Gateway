@@ -1,13 +1,24 @@
 package com.chamod.customer.service;
 
 import com.chamod.customer.entity.Customer;
+import com.chamod.customer.repository.CustomerRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface CustomerService {
-    Customer saveCustomer(Customer customer);
-    Customer updateCustomer(Long id, Customer customer);
-    List<Customer> getAllCustomers();
-    Customer getCustomerById(Long id);
-    void deleteCustomer(Long id);
+@Service
+public class CustomerService {
+
+    @Autowired
+    private CustomerRepo customerRepo;
+
+    public List<Customer> getAllCustomers() {
+        return customerRepo.findAll();
+    }
+
+    public Customer saveCustomer(Customer customer) {
+        return customerRepo.save(customer);
+    }
+
 }

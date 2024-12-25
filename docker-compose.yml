@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  api-gateway:
+    image: api-gateway:latest
+    container_name: api-gateway
+    build:
+      context: ./api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - customer-service
+      - order-service
+      - product-service
+
+  customer-service:
+    image: customer-service:latest
+    container_name: customer-service
+    build:
+      context: ./customer-service
+    ports:
+      - "8081:8081"
+
+  order-service:
+    image: order-service:latest
+    container_name: order-service
+    build:
+      context: ./order-service
+    ports:
+      - "8082:8082"
+
+  product-service:
+    image: product-service:latest
+    container_name: product-service
+    build:
+      context: ./product-service
+    ports:
+      - "8083:8083"
