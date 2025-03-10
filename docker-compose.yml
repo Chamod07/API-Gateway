@@ -16,9 +16,12 @@ services:
         condition: service_healthy
       product-service:
         condition: service_healthy
+      auth-service:
+        condition: service_healthy
     environment:
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
+      SPRING_PROFILES_ACTIVE: docker
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
       interval: 30s
@@ -27,6 +30,15 @@ services:
       start_period: 40s
     networks:
       - apigateway-network
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "9000:9000"
+    networks:
+      - apigateway-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
 
   customer-service:
     image: customer-service:latest
@@ -39,6 +51,7 @@ services:
     environment:
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
+      SPRING_PROFILES_ACTIVE: docker
     depends_on:
       redis:
         condition: service_healthy
@@ -62,6 +75,7 @@ services:
     environment:
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
+      SPRING_PROFILES_ACTIVE: docker
     depends_on:
       redis:
         condition: service_healthy
@@ -85,6 +99,7 @@ services:
     environment:
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
+      SPRING_PROFILES_ACTIVE: docker
     depends_on:
       redis:
         condition: service_healthy
