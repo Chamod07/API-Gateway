@@ -1,4 +1,4 @@
-package main.java.com.chamod.auth.config;
+package com.chamod.auth.config;
 
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
