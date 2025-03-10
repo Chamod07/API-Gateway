@@ -1,14 +1,15 @@
 server:
   port: 8080
 
-#spring:
-#  security:
-#    enabled: false
-
+spring:
   application:
     name: api-gateway
   cloud:
     gateway:
+      default-filters:
+        - name: FallbackHeaders
+          args:
+            fallbackUri: forward:/fallback
       routes:
         - id: customer-service
           uri: http://localhost:8081
@@ -30,6 +31,18 @@ server:
             - Path=/api/products/**
           filters:
             - RemoveRequestHeader=Cookie
+
+springdoc:
+  api-docs.enabled: true
+  swagger-ui.enabled: true
+  swagger-ui.path: /swagger-ui.html
+  urls:
+    - url: /customer-service/v3/api-docs
+      name: Customer Service API Docs
+    - url: /order-service/v3/api-docs
+      name: Order Service API Docs
+    - url: /product-service/v3/api-docs
+      name: Product Service API Docs
 
 #Actuator endpoints for monitoring
 management:
