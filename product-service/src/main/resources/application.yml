@@ -17,19 +17,20 @@ spring:
     console:
       enabled: true
 
-# OpenAPI documentation
+# OpenAPI Configuration
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+    operationsSorter: method
 
-# Actuator endpoints for monitoring
+# Expose actuator endpoints for the API gateway to monitor
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,prometheus
+        include: health,info,metrics
   endpoint:
     health:
       show-details: always
