@@ -28,6 +28,11 @@ import org.springframework.security.oauth2.server.authorization.settings.ClientS
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
+import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationContext;
+import java.util.HashMap;
+import java.util.Map;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -43,9 +48,29 @@ public class SecurityConfig {
     @Bean
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
-        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-        http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-                .oidc(oidc -> oidc.userInfoEndpoint(userInfo -> userInfo.userInfoMapper(user -> user)));
+        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
+        http.apply(authorizationServerConfigurer);
+
+        // Enable OpenID Connect 1.0
+        authorizationServerConfigurer
+                .oidc(oidc -> oidc
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userInfoMapper(context -> {
+                                    OidcUserInfoAuthenticationContext authenticationContext = context;
+                                    Map<String, Object> claims = new HashMap<>();
+                                    claims.put("sub", authenticationContext.getAuthentication().getName());
+                                    // Add additional claims as needed
+                                    return new OidcUserInfo(claims);
+                                })));
+
+        // Set up custom authorization endpoint
+        RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
+
+        // Apply the security configuration for the authorization server
+        http.securityMatcher(endpointsMatcher)
+                .csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher))
+                .headers(headers -> headers.frameOptions().sameOrigin());
+
         return http.build();
     }
 
@@ -55,9 +80,14 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/h2-console/**").permitAll()
+                        .requestMatchers("/actuator/**", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**")
+                        .permitAll()
                         .anyRequest().authenticated())
                 .formLogin(login -> login.permitAll());
+
+        // Allow frames for H2 console
+        http.headers(headers -> headers.frameOptions().sameOrigin());
+
         return http.build();
     }
 
@@ -92,6 +122,7 @@ public class SecurityConfig {
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .redirectUri("http://localhost:8080/login/oauth2/code/gateway")
+                .redirectUri("http://api-gateway:8080/login/oauth2/code/gateway")
                 .scope(OidcScopes.OPENID)
                 .scope("customer.read")
                 .scope("customer.write")

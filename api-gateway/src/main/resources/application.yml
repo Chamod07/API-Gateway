@@ -11,10 +11,6 @@ spring:
           jwk-set-uri: http://localhost:9000/oauth2/jwks
   cloud:
     gateway:
-      default-filters:
-        - name: FallbackHeaders
-          args:
-            fallbackUri: forward:/fallback
       routes:
         - id: auth-service
           uri: http://localhost:9000
