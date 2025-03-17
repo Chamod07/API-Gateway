@@ -8,53 +8,34 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://localhost:9000/oauth2/jwks
+          jwk-set-uri: http://auth-service:9000/oauth2/jwks
   cloud:
     gateway:
       routes:
         - id: auth-service
-          uri: http://localhost:9000
+          uri: http://auth-service:9000
           predicates:
             - Path=/auth/**
           filters:
             - RemoveRequestHeader=Cookie
 
         - id: customer-service
-          uri: http://localhost:8081
+          uri: http://customer-service:8081
           predicates:
             - Path=/api/customers/**
           filters:
             - RemoveRequestHeader=Cookie
 
         - id: order-service
-          uri: http://localhost:8082
+          uri: http://order-service:8082
           predicates:
             - Path=/api/orders/**
           filters:
             - RemoveRequestHeader=Cookie
 
         - id: product-service
-          uri: http://localhost:8083
+          uri: http://product-service:8083
           predicates:
             - Path=/api/products/**
           filters:
             - RemoveRequestHeader=Cookie
-
-springdoc:
-  api-docs.enabled: true
-  swagger-ui.enabled: true
-  swagger-ui.path: /swagger-ui.html
-  urls:
-    - url: /customer-service/v3/api-docs
-      name: Customer Service API Docs
-    - url: /order-service/v3/api-docs
-      name: Order Service API Docs
-    - url: /product-service/v3/api-docs
-      name: Product Service API Docs
-
-#Actuator endpoints for monitoring
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics
