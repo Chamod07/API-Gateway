@@ -4,21 +4,13 @@ server:
 spring:
   application:
     name: api-gateway
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://localhost:9000/oauth2/jwks
   cloud:
     gateway:
+      default-filters:
+        - name: FallbackHeaders
+          args:
+            fallbackUri: forward:/fallback
       routes:
-        - id: auth-service
-          uri: http://localhost:9000
-          predicates:
-            - Path=/auth/**
-          filters:
-            - RemoveRequestHeader=Cookie
-
         - id: customer-service
           uri: http://localhost:8081
           predicates:

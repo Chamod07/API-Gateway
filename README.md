@@ -11,49 +11,42 @@
 </div>
 
 ---
-
 ## **📖Project Description**
-
 This project is a **cloud-native API Gateway** designed to serve as a central point for routing, securing, and monitoring API traffic in a microservices architecture. It provides seamless integration with multiple backend services, real-time analytics, and scalability features. The gateway routes requests to microservices like `customer-service`, `order-service`, and `product-service` while ensuring security, rate limiting, and centralized monitoring.
 
 ### **🔑Key Features**
-
 - **API Management**:
-  - Authentication and Authorization using OAuth 2.0 and JWT.
-  - Rate limiting to manage client quotas.
-  - Auto-generated API documentation using Swagger/OpenAPI.
+    - Authentication and Authorization using OAuth 2.0 and JWT.
+    - Rate limiting to manage client quotas.
+    - Auto-generated API documentation using Swagger/OpenAPI.
 - **Real-Time Monitoring**:
-  - Traffic metrics such as request count, response time, and error rates.
-  - User-friendly dashboard built with React.
-  - Alerts for unusual traffic spikes or high error rates.
+    - Traffic metrics such as request count, response time, and error rates.
+    - User-friendly dashboard built with React.
+    - Alerts for unusual traffic spikes or high error rates.
 - **Scalability**:
-  - Containerized services using Docker.
-  - Kubernetes orchestration for horizontal scaling.
-  - Dynamic service discovery with Consul/Eureka.
+    - Containerized services using Docker.
+    - Kubernetes orchestration for horizontal scaling.
+    - Dynamic service discovery with Consul/Eureka.
 - **Logging & Tracing**:
-  - Centralized logging using ELK Stack (Elasticsearch, Logstash, Kibana).
-  - Distributed tracing with Jaeger/Zipkin.
+    - Centralized logging using ELK Stack (Elasticsearch, Logstash, Kibana).
+    - Distributed tracing with Jaeger/Zipkin.
 
 ---
 
 ## **🚀Installation**
 
 ### **Prerequisites**
-
 1. Install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/).
 2. Install [Java JDK (11 or higher)](https://adoptopenjdk.net/).
 3. Install [Node.js](https://nodejs.org/).
 4. Install [Kubernetes CLI (kubectl)](https://kubernetes.io/docs/tasks/tools/).
 
 ### **Steps**
-
 1. Clone the repository:
-
 ```
 git clone https://github.com/Chamod07/API-Gateway.git
 cd API-Gateway
 ```
-
 2. Build the services:
 
 ```
@@ -61,7 +54,6 @@ cd API-Gateway
 ```
 
 3. Start the services using Docker Compose:
-
 ```
 docker-compose up --build
 ```
@@ -72,33 +64,8 @@ docker-compose up --build
 
 ## **⚙️Usage**
 
-### **Authentication and Authorization**
-
-The API Gateway uses OAuth 2.0 with JWT for authentication and authorization:
-
-1. **Obtain a token**:
-
-```
-curl -X POST http://localhost:9000/oauth2/token \
-     -H "Content-Type: application/x-www-form-urlencoded" \
-     -H "Authorization: Basic Z2F0ZXdheS1jbGllbnQ6Z2F0ZXdheS1zZWNyZXQ=" \
-     -d "grant_type=client_credentials&scope=customer.read"
-```
-
-2. **Use the token**:
-
-```
-curl -H "Authorization: Bearer YOUR_JWT_TOKEN" http://localhost:8080/api/customers/1
-```
-
-3. **Available roles**:
-   - USER: Can access customer and product APIs
-   - ADMIN: Can access all APIs including orders
-
 ### **API Gateway Configuration**
-
 The gateway routes requests to the following microservices:
-
 - `customer-service`: `http://localhost:8081/api/customers/**`
 - `order-service`: `http://localhost:8082/api/orders/**`
 - `product-service`: `http://localhost:8083/api/products/**`
@@ -110,7 +77,6 @@ curl http://localhost:8080/api/customers/1
 ```
 
 ### **Monitoring**
-
 - Prometheus metrics are available at `/actuator/prometheus`.
 - Access logs in Kibana by connecting to Elasticsearch.
 
@@ -119,18 +85,15 @@ curl http://localhost:8080/api/customers/1
 ## **✨Features**
 
 ### **Microservices**
-
 1. **Customer Service**: Manages customer data.
 2. **Order Service**: Handles order processing.
 3. **Product Service**: Manages product catalog.
 
 ### **Gateway Features**
-
 - Centralized routing and security.
 - Real-time traffic monitoring.
 
 ### **Dashboard**
-
 - Visualizes system health and traffic metrics.
 
 ---
@@ -138,14 +101,11 @@ curl http://localhost:8080/api/customers/1
 ## **🤝Contributing**
 
 I welcome contributions! To contribute:
-
 1. Fork this repository.
 2. Create a new branch for your feature or bug fix:
-
 ```
     git checkout -b feature-name
 ```
-
 3. Commit your changes and push them to your forked repository.
 4. Submit a pull request with a detailed description of your changes.
 
@@ -165,19 +125,17 @@ This project is licensed under the Apache License. See the [LICENSE](./LICENSE) 
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
 ### Screenshots
-
 Screenshots of the dashboard or API usage examples here.
 
 ### Documentation
-
 For detailed documentation on API endpoints, refer to the Swagger/OpenAPI documentation available at `/swagger-ui.html`.
 
 ---
 
 ## **📅Changelog**
 
-| Version | Date     | Changes                            |
-| ------- | -------- | ---------------------------------- |
+| Version | Date     | Changes                          |
+|---------|----------|----------------------------------|
 | v1.0    | Dec 2024 | Initial release with core features |
 
 ---
